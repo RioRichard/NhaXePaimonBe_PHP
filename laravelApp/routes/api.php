@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// use App\Http\Controllers\API\AuthController;
+// //API route để đăng ký
+// Route::post('/login', [AuthController::class, 'register']);
+// //API route để đăng nhập
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     Route::get('/profile', function(Request $request) { 
+//         return auth()->user();
+//     });
+//     // API route thoát
+//     Route::post('/logout', [AuthController::class, 'logout']);
+// });

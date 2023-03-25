@@ -32,7 +32,7 @@ Route::get('managers', [
     ManagerController::class,
     'index'
 ]);
-Route::get('/managers/{_id}', [
+Route::get('/managers/{id}', [
     ManagerController::class, 
     'show'
 ]);
@@ -43,3 +43,16 @@ Route::post('managers', [
 Route::delete('/managers/{manager}', [ManagerController::class, 'destroy']);
 Route::put('/managers/{manager}', [ManagerController::class, 'update']);
 Route::resource('ManagerController', ManagerController::class);
+
+use App\Http\Controllers\API\AuthController;
+//API route để đăng ký
+Route::post('/dangky', [AuthController::class, 'register']);
+//API route để đăng nhập
+Route::post('/dangnhap', [AuthController::class, 'login']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) { 
+        return auth()->user();
+    });
+    // API route thoát
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
