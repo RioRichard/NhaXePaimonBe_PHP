@@ -58,52 +58,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-//UsersAPI
-Route::get('/users', [
-    UserController::class,
-    'index'
-]);
 
-Route::post('/users', [
-    UserController::class,
-    'store'
-]);
 
-Route::get('/users/{id}', [
-    UserController::class, 
-    'show'
-]);
-
-Route::put('/users/{users}', [
-    UserController::class, 
-    'update'
-]);
-Route::delete('/users/{users}', [
-    UserController::class, 
-    'destroy'
-]);
-
-//Order API
-Route::get('/order', [
-    OrderController::class,
-    'index'
-]);
-
-Route::post('/order', [
-    OrderController::class,
-    'store'
-]);
-
-Route::get('/order/{id}', [
-    OrderController::class, 
-    'show'
-]);
-
-Route::put('/order/{order}', [
-    OrderController::class, 
-    'update'
-]);
-Route::delete('/order/{order}', [
-    OrderController::class, 
-    'destroy'
-]);

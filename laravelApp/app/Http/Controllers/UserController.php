@@ -9,12 +9,14 @@ use Validator;
 
 class UserController extends Controller
 {
-    public function index() {
+
+    public function index()
+    {
         $users = Users::all();
         $arr = [
-        'status' => true,
-        'message' => "Danh sách tài khoản user",
-        'data'=>UserResource::collection($users)
+            'status' => true,
+            'message' => "Danh sách tuyến",
+            'data' => UserResource::collection($users)
         ];
         return response()->json($arr, 200);
     }
@@ -62,44 +64,56 @@ class UserController extends Controller
         return response()->json($arr, 201);
        }
        
-       public function update(Request $request, Users $users){
-        $input = $request->all();
-        $validator = Validator::make($input, [
+      public function update(Request $request, $_id)
+      {
+          $users = Users::find($_id);
+          if (!$users) {
+              $error = ['message' => 'Không tìm thấy id cần xóa'];
+              return response()->json($error);
+          }
+          $input = $request->all();
+          $validator = Validator::make($input, [
             'userName' => 'required',
             'email' => 'required',
             'password' =>'required',
             'name' => 'required',
-            'phone' =>'required'
-        ]);
-        if($validator->fails()){
-           $arr = [
-             'success' => false,
-             'message' => 'Lỗi kiểm tra dữ liệu',
-             'data' => $validator->errors()
-           ];
-           return response()->json($arr, 200);
-        }
- 
-        $users->userName = $input['userName'];
-        $users->email = $input['email'];
-        $users->password = $input['password'];
-        $users->name = $input['name'];
-        $users->phone = $input['phone'];
-        $users->save();
-        $arr = [
-           'status' => true,
-           'message' => 'cập nhật thành công',
-           'data' => new UserResource($users)
-        ];
-        return response()->json($arr, 200);
+            'phone' =>'required',
+          ]);
+          if ($validator->fails()) {
+              $arr = [
+                  'success' => false,
+                  'message' => 'Lỗi kiểm tra dữ liệu',
+                  'data' => $validator->errors()
+              ];
+              return response()->json($arr, 200);
+          }
+          $users->userName = $input['userName'];
+          $users->email = $input['email'];
+          $users->password = $input['password'];
+          $users->name = $input['name'];
+          $users->phone = $input['phone'];
+          $users->save();
+          $arr = [
+              'status' => true,
+              'message' => 'cập nhật thành công',
+              'data' => new UserResource($users)
+          ];
+          return response()->json($arr, 200);
       }
-      public function destroy(Users $users){
-        $users->delete();
-        $arr = [
-           'status' => true,
-           'message' =>'Sản phẩm đã được xóa',
-           'data' => [],
-        ];
-        return response()->json($arr, 200);
+
+      public function destroy($_id){
+        $users = Users::find($_id);
+        if ($users) {
+            $users->delete();
+            $arr = [
+                'status' => true,
+                'message' => 'Tuyến đã được xóa',
+                'data' => [],
+            ];
+            return response()->json($arr, 200);
+        } else {
+            $error = ['message' => 'Không tìm thấy id cần xóa'];
+            return response()->json($error);
+        }
      }
 }
