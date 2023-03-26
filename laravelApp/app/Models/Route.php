@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-class Manager extends Authenticatable
+class Route extends Authenticatable
 {
 
     use HasFactory, HasApiTokens;
-    protected $table = "manager";
-    protected $fillable = ['id', 'userName', 'password', 'name', 'email', 'phone', 'role'];
+    protected $table = "routes";
+    protected $fillable = ['id', 'fromId', 'toId','departure','arrival','bus','driver','extraStaff','price','status'];
     public $timestamps = false;   
 
 }

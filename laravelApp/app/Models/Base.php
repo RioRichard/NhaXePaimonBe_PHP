@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-class Manager extends Authenticatable
+class Base extends Authenticatable
 {
 
     use HasFactory, HasApiTokens;
-    protected $table = "manager";
-    protected $fillable = ['id', 'userName', 'password', 'name', 'email', 'phone', 'role'];
+    protected $table = "bases";
+    protected $fillable = ['id', 'name', 'address'];
     public $timestamps = false;   
 
 }
