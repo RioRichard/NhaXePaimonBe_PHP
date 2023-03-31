@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,50 +21,54 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::get('/managers', [ManagerController::class,"index"]);
+
+Route::get('/managers', [ManagerController::class, "index"]);
+Route::post('/managers', [ManagerController::class, "store"]);
+
 
 //Bus api
-Route::get('/buses', [BusController::class,"index"]);
-Route::get('/buses/{_id}', [BusController::class,"show"]);
-Route::post('/buses', [BusController::class,"store"]);
-Route::delete('/buses/{_id}', [BusController::class,"destroy"]);
-Route::put('/buses/{_id}', [BusController::class,"update"]);
+Route::get('/buses', [BusController::class, "index"]);
+Route::get('/buses/{_id}', [BusController::class, "show"]);
+Route::post('/buses', [BusController::class, "store"]);
+Route::delete('/buses/{_id}', [BusController::class, "destroy"]);
+Route::put('/buses/{_id}', [BusController::class, "update"]);
 
 //Base api
-Route::get('/bases', [BaseController::class,"index"]);
-Route::get('/bases/{_id}', [BaseController::class,"show"]);
-Route::post('/bases', [BaseController::class,"store"]);
-Route::delete('/bases/{_id}', [BaseController::class,"destroy"]);
-Route::put('/bases/{_id}', [BaseController::class,"update"]);
+Route::get('/bases', [BaseController::class, "index"]);
+Route::get('/bases/{_id}', [BaseController::class, "show"]);
+Route::post('/bases', [BaseController::class, "store"]);
+Route::delete('/bases/{_id}', [BaseController::class, "destroy"]);
+Route::put('/bases/{_id}', [BaseController::class, "update"]);
 
 //Route api
-Route::get('/routes', [RouteController::class,"index"]);
-Route::get('/routes/{_id}', [RouteController::class,"show"]);
-Route::post('/routes', [RouteController::class,"store"]);
-Route::delete('/routes/{_id}', [RouteController::class,"destroy"]);
-Route::put('/routes/{_id}', [RouteController::class,"update"]);
+Route::get('/routes', [RouteController::class, "index"]);
+Route::get('/routes/{_id}', [RouteController::class, "show"]);
+Route::post('/routes', [RouteController::class, "store"]);
+Route::delete('/routes/{_id}', [RouteController::class, "destroy"]);
+Route::put('/routes/{_id}', [RouteController::class, "update"]);
 
 //UsersAPI
-Route::get('/users', [ UserController::class,'index']);
-Route::post('/users', [ UserController::class,'store']);
-Route::get('/users/{id}', [ UserController::class, 'show']);
-Route::put('/users/{users}', [ UserController::class,  'update']);
-Route::delete('/users/{users}', [ UserController::class, 'destroy']);
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{users}', [UserController::class, 'update']);
+Route::delete('/users/{users}', [UserController::class, 'destroy']);
 
 //Order API
-Route::get('/order', [ OrderController::class,'index']);
-Route::post('/order', [ OrderController::class, 'store']);
-Route::get('/order/{id}', [ OrderController::class,'show']);
-Route::put('/order/{order}', [ OrderController::class,'update']);
-Route::delete('/order/{order}', [ OrderController::class, 'destroy']);
-// use App\Http\Controllers\API\AuthController;
+Route::get('/order', [OrderController::class, 'index']);
+Route::post('/order', [OrderController::class, 'store']);
+Route::get('/order/{id}', [OrderController::class, 'show']);
+Route::put('/order/{order}', [OrderController::class, 'update']);
+Route::delete('/order/{order}', [OrderController::class, 'destroy']);
 // //API route để đăng ký
-// Route::post('/login', [AuthController::class, 'register']);
-// //API route để đăng nhập
-// Route::post('/login', [AuthController::class, 'login']);
+Route::post('/authen', [AuthController::class, 'login']);
+Route::get('/authen/getme', [AuthController::class, 'me']);
+Route::post('/authen/manager', [AuthController::class, 'loginManager']);
+Route::get('/authen/manager/getme', [AuthController::class, 'meManager']);
+
+
+// Route::post('/authen/', [AuthController::class, 'me']);
+
 // Route::group(['middleware' => ['auth:sanctum']], function () {
 //     Route::get('/profile', function(Request $request) { 
 //         return auth()->user();

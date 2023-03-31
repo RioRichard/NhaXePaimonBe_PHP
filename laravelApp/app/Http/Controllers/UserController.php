@@ -25,10 +25,10 @@ class UserController extends Controller
         $input = $request->all(); 
         $validator = Validator::make($input, [
           'userName' => 'required',
-          'email' => 'required',
+         
           'password' =>'required',
-          'name' => 'required',
-          'phone' =>'required'
+
+
         ]);
         if($validator->fails()){
            $arr = [
