@@ -12,18 +12,6 @@ use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:user', ['except' => ['login']]);
-        $this->middleware('auth:manager', ['except' => ['loginManager']]);
-
-    }
-
-    /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
