@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ErrorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +72,5 @@ Route::post('/users', [UserController::class, 'store']);
 // //API route để đăng nhập
 Route::post('/authen', [AuthController::class, 'login']);
 Route::post('/authen/admin', [AuthController::class, 'loginManager']);
+
+Route::get("/401", [ErrorController::class, 'error401']);
