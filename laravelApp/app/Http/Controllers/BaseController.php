@@ -35,7 +35,7 @@ class BaseController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            'id' => 'required',
+
             'name' => 'required',
             'address' => 'required',
         ]);
