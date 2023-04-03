@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-class Bus extends Authenticatable
+class Seat extends Authenticatable
 {
 
     use HasFactory, HasApiTokens;
 
-    protected $fillable = ['id', 'bus_number', 'type']; 
+    protected $fillable = ['id', 'busId', 'name'];
     public $timestamps = false;   
 
 }

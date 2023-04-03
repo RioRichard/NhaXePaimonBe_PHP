@@ -16,12 +16,10 @@ class BusResource extends JsonResource
 
     public function toArray($request)
     {
-        $seat = Seat::where('busId',$this->id)->get();
     return [
         'id' => $this->id,
-        'bus_number' => $this->plates,                  
-        'type' => $this->type,
-        'seats'=>$seat
+        'busId' => $this->busId,
+        'name' => $this->name,
     ];
 }
 

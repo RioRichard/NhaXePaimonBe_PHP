@@ -15,10 +15,13 @@ class BaseController extends Controller
     public function index()
     {
         $base = Base::all();
+        $data=[
+            'bases'=>BaseResource::collection($base)
+        ];
         $arr = [
             'status' => true,
             'message' => "Danh sách cơ sở",
-            'data' => BaseResource::collection($base)
+            'data' => $data
         ];
         return response()->json($arr, 200);
     }
@@ -34,19 +37,19 @@ class BaseController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $validator = Validator::make($input, [
-
-            'name' => 'required',
-            'address' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $arr = [
-                'success' => false,
-                'message' => 'Lỗi kiểm tra dữ liệu',
-                'data' => $validator->errors()
-            ];
-            return response()->json($arr, 200);
-        }
+        // $validator = Validator::make($input, [
+        //     'id' => 'required',
+        //     'name' => 'required',
+        //     'address' => 'required',
+        // ]);
+        // if ($validator->fails()) {
+        //     $arr = [
+        //         'success' => false,
+        //         'message' => 'Lỗi kiểm tra dữ liệu',
+        //         'data' => $validator->errors()
+        //     ];
+        //     return response()->json($arr, 200);
+        // }
         $base = Base::create($input);
         $arr = [
             'status' => true,
@@ -70,10 +73,13 @@ class BaseController extends Controller
             ];
             return response()->json($arr, 200);
         }
+        $data = [
+            'bases' =>new BaseResource($base)
+          ];
         $arr = [
             'status' => true,
             'message' => "Chi tiết cơ sở ",
-            'data' => new BaseResource($base)
+            'data' => $data
         ];
         return response()->json($arr, 201);
     }
@@ -93,22 +99,11 @@ class BaseController extends Controller
     {
         $base = Base::find($_id);
         if (!$base) {
-            $error = ['message' => 'Không tìm thấy id cần xóa'];
+            $error = ['message' => 'Không tìm thấy id cần sửa'];
             return response()->json($error);
         }
         $input = $request->all();
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'address' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $arr = [
-                'success' => false,
-                'message' => 'Lỗi kiểm tra dữ liệu',
-                'data' => $validator->errors()
-            ];
-            return response()->json($arr, 200);
-        }
+
 
         $base->name = $input['name'];
         $base->address = $input['address'];

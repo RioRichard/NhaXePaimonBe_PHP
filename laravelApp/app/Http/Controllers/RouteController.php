@@ -15,10 +15,13 @@ class RouteController extends Controller
     public function index()
     {
         $route = Route::all();
+        $data = [
+            'routes' => RouteResource::collection($route)
+          ];
         $arr = [
             'status' => true,
             'message' => "Danh sách tuyến",
-            'data' => RouteResource::collection($route)
+            'data' => $data
         ];
         return response()->json($arr, 200);
     }

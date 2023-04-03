@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seat;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Bus;
@@ -15,10 +16,13 @@ class BusController extends Controller
   public function index()
   {
     $bus = Bus::all();
+    $data = [
+      'buses' => BusResource::collection($bus)
+    ];
     $arr = [
       'status' => true,
       'message' => "Danh sách xe",
-      'data' => BusResource::collection($bus)
+      'data' => $data
     ];
     return response()->json($arr, 200);
   }
@@ -34,20 +38,19 @@ class BusController extends Controller
   public function store(Request $request)
   {
     $input = $request->all();
-    $validator = Validator::make($input, [
-      'id' => 'required',
-      'plates' => 'required',
-      'type' => 'required',
-    ]);
-    if ($validator->fails()) {
-      $arr = [
-        'success' => false,
-        'message' => 'Lỗi kiểm tra dữ liệu',
-        'data' => $validator->errors()
-      ];
-      return response()->json($arr, 200);
-    }
+    echo $input['bus_number'];
     $bus = Bus::create($input);
+    $numberSeats = $input['numberOfSeat'];
+    // $busId = $bus->id;
+    // $name = "name";
+    // $param = array($busId,$name);
+    for ($i = 0; $i < $numberSeats; $i++) {
+      $seat = new Seat;
+      $seat->busId = $bus->id;
+      $seat->name = "Ghế ".$i+1;
+      $seat->save();
+    }
+    echo $numberSeats;
     $arr = [
       'status' => true,
       'message' => "Xe đã lưu thành công",
@@ -70,10 +73,13 @@ class BusController extends Controller
       ];
       return response()->json($arr, 200);
     }
+    $data = [
+      'buses' => new BusResource($bus)
+    ];
     $arr = [
       'status' => true,
       'message' => "Chi tiết xe ",
-      'data' => new BusResource($bus)
+      'data' => $data
     ];
     return response()->json($arr, 201);
   }
@@ -97,20 +103,8 @@ class BusController extends Controller
       return response()->json($error);
     }
     $input = $request->all();
-    $validator = Validator::make($input, [
-      'plates' => 'required',
-      'type' => 'required',
-    ]);
-    if ($validator->fails()) {
-      $arr = [
-        'success' => false,
-        'message' => 'Lỗi kiểm tra dữ liệu',
-        'data' => $validator->errors()
-      ];
-      return response()->json($arr, 200);
-    }
 
-    $bus->plates = $input['plates'];
+    $bus->plates = $input['bus_number'];
     $bus->type = $input['type'];
     $bus->save();
     $arr = [

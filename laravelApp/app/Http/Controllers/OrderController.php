@@ -14,10 +14,13 @@ class OrderController extends Controller
     public function index()
     {
         $order = Order::all();
+        $data = [
+            'orders' => OrderResource::collection($order)
+          ];
         $arr = [
             'status' => true,
-            'message' => "Danh sách tuyến",
-            'data' => OrderResource::collection($order)
+            'message' => "Danh sách đơn đặt hàng",
+            'data' => $data
         ];
         return response()->json($arr, 200);
     }
