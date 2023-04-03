@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ErrorController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,54 +23,54 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:manager'])->group(function () {
+    Route::get('/authen/admin/getme', [AuthController::class, 'meManager']);
+
+    Route::get('/managers', [ManagerController::class, "index"]);
+    Route::post('/managers', [ManagerController::class, "store"]);
+
+    Route::get('/order', [OrderController::class, 'index']);
+    Route::put('/order/{order}', [OrderController::class, 'update']);
+
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+
+    Route::get('/routes/{_id}', [RouteController::class, "show"]);
+    Route::post('/routes', [RouteController::class, "store"]);
+    Route::delete('/routes/{_id}', [RouteController::class, "destroy"]);
+    Route::put('/routes/{_id}', [RouteController::class, "update"]);
+
+    Route::get('/bases/{_id}', [BaseController::class, "show"]);
+    Route::post('/bases', [BaseController::class, "store"]);
+    Route::delete('/bases/{_id}', [BaseController::class, "destroy"]);
+    Route::put('/bases/{_id}', [BaseController::class, "update"]);
+
+    Route::get('/buses/{_id}', [BusController::class, "show"]);
+    Route::post('/buses', [BusController::class, "store"]);
+    Route::delete('/buses/{_id}', [BusController::class, "destroy"]);
+    Route::put('/buses/{_id}', [BusController::class, "update"]);
 });
-Route::get('/managers', [ManagerController::class,"index"]);
 
-//Bus api
-Route::get('/buses', [BusController::class,"index"]);
-Route::get('/buses/{_id}', [BusController::class,"show"]);
-Route::post('/buses', [BusController::class,"store"]);
-Route::delete('/buses/{_id}', [BusController::class,"destroy"]);
-Route::put('/buses/{_id}', [BusController::class,"update"]);
+Route::middleware(['auth:user'])->group(function () {
+    Route::put('/users/{users}', [UserController::class, 'update']);
+    Route::get('/authen/getme', [AuthController::class, 'me']);
+});
 
-//Base api
-Route::get('/bases', [BaseController::class,"index"]);
-Route::get('/bases/{_id}', [BaseController::class,"show"]);
-Route::post('/bases', [BaseController::class,"store"]);
-Route::delete('/bases/{_id}', [BaseController::class,"destroy"]);
-Route::put('/bases/{_id}', [BaseController::class,"update"]);
+Route::middleware(['auth:user', 'auth:manager'])->group(function () {
+    Route::post('/order', [OrderController::class, 'store']);
+    Route::get('/order/{id}', [OrderController::class, 'show']);
+});
 
-//Route api
-Route::get('/routes', [RouteController::class,"index"]);
-Route::get('/routes/{_id}', [RouteController::class,"show"]);
-Route::post('/routes', [RouteController::class,"store"]);
-Route::delete('/routes/{_id}', [RouteController::class,"destroy"]);
-Route::put('/routes/{_id}', [RouteController::class,"update"]);
+Route::get('/buses', [BusController::class, "index"]);
 
-//UsersAPI
-Route::get('/users', [ UserController::class,'index']);
-Route::post('/users', [ UserController::class,'store']);
-Route::get('/users/{id}', [ UserController::class, 'show']);
-Route::put('/users/{users}', [ UserController::class,  'update']);
-Route::delete('/users/{users}', [ UserController::class, 'destroy']);
+Route::get('/bases', [BaseController::class, "index"]);
 
-//Order API
-Route::get('/order', [ OrderController::class,'index']);
-Route::post('/order', [ OrderController::class, 'store']);
-Route::get('/order/{id}', [ OrderController::class,'show']);
-Route::put('/order/{order}', [ OrderController::class,'update']);
-Route::delete('/order/{order}', [ OrderController::class, 'destroy']);
-// use App\Http\Controllers\API\AuthController;
-// //API route để đăng ký
-// Route::post('/login', [AuthController::class, 'register']);
+Route::get('/routes', [RouteController::class, "index"]);
+
+// Đăng ký
+Route::post('/users', [UserController::class, 'store']);
 // //API route để đăng nhập
-// Route::post('/login', [AuthController::class, 'login']);
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//     Route::get('/profile', function(Request $request) { 
-//         return auth()->user();
-//     });
-//     // API route thoát
-//     Route::post('/logout', [AuthController::class, 'logout']);
-// });
+Route::post('/authen', [AuthController::class, 'login']);
+Route::post('/authen/admin', [AuthController::class, 'loginManager']);
+
+Route::get("/401", [ErrorController::class, 'error401']);

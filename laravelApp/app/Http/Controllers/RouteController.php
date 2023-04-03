@@ -38,16 +38,11 @@ class RouteController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            'id' => 'required',
             'fromId' => 'required',
             'toId' => 'required',
             'departure' => 'required',
             'arrival' => 'required',
-            'bus' => 'required',
-            // 'driver' => 'required',
-            // 'extraStaff' => 'required',
-            'price' => 'required',
-            'status' => 'required',
+
         ]);
         if ($validator->fails()) {
             $arr = [
