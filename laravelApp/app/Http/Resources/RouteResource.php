@@ -22,16 +22,16 @@ class RouteResource extends JsonResource
         $seat = Seat::where('busId', $bus->id)->get();
         $buss = [
             'id' => $bus->id,
-            'bus_number' => $bus->plates,
+            'bus_number' => $bus->bus_number,
             'type' => $bus->type,
-            'seat' => $seat
+            'seats' => $seat
         ];
         $fromId = Base::find($this->fromId);
         $toId = Base::find($this->toId);
         return [
             'id' => $this->id,
-            'fromId' => $fromId,
-            'toId' => $toId,
+            'from' => $fromId,
+            'to' => $toId,
             'departure' => $this->departure,
             'arrival' => $this->arrival,
             'bus' => $buss,

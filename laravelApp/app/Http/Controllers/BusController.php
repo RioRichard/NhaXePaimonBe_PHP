@@ -104,10 +104,10 @@ class BusController extends Controller
     }
     $input = $request->all();
 
-    $bus->plates = $input['bus_number'];
+    $bus->bus_number = $input['bus_number'];
     $bus->type = $input['type'];
     $bus->save();
-    $arr = [
+    $arr = [  
       'status' => true,
       'message' => 'cập nhật thành công',
       'data' => new BusResource($bus)

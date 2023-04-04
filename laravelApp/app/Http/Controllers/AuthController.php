@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         DB::enableQueryLog();
 
-        $user = Users::where('userName',$request['userName'])->where('password',$request['password'])->first();
+        $user = Users::where('userName', $request['username'])->where('password', $request['pass'])->first();
         $token = auth('user')->login($user);
         $test = DB::getQueryLog();
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
     {
         DB::enableQueryLog();
 
-        $user = Manager::where('userName',$request['userName'])->where('password',$request['password'])->first();
+        $user = Manager::where('userName', $request['username'])->where('password', $request['pass'])->first();
         $token = auth('manager')->login($user);
 
 
@@ -70,7 +70,7 @@ class AuthController extends Controller
     {
         return response()->json(auth('manager')->user());
     }
-   
+
 
     /**
      * Get the token array structure.
@@ -81,8 +81,11 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $data = [
+            'managers' => $token
+        ];
         return response()->json([
-            'access_token' => $token,
+            'data' => $data,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);

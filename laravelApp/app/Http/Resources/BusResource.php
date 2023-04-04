@@ -19,7 +19,7 @@ class BusResource extends JsonResource
         $seat = Seat::where('busId',$this->id)->get();
     return [
         'id' => $this->id,
-        'bus_number' => $this->plates,                  
+        'bus_number' => $this->bus_number,                  
         'type' => $this->type,
         'seats'=>$seat
     ];

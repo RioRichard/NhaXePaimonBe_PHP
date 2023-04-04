@@ -71,14 +71,17 @@ class RouteController extends Controller
             $arr = [
                 'success' => false,
                 'message' => 'Không có tuyến này',
-                'dara' => []
+                'data' => []
             ];
             return response()->json($arr, 200);
         }
+        $data = [
+            'routes' => new RouteResource($route)
+          ];
         $arr = [
             'status' => true,
             'message' => "Chi tiết tuyến ",
-            'data' => new RouteResource($route)
+            'data' => $data
         ];
         return response()->json($arr, 201);
     }

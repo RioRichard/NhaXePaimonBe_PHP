@@ -35,7 +35,7 @@ Route::middleware(['auth:manager'])->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
 
-    Route::get('/routes/{_id}', [RouteController::class, "show"]);
+
     Route::post('/routes', [RouteController::class, "store"]);
     Route::delete('/routes/{_id}', [RouteController::class, "destroy"]);
     Route::put('/routes/{_id}', [RouteController::class, "update"]);
@@ -57,7 +57,7 @@ Route::middleware(['auth:user'])->group(function () {
 });
 
 Route::middleware(['auth:user', 'auth:manager'])->group(function () {
-    Route::post('/order', [OrderController::class, 'store']);
+
     Route::get('/order/{id}', [OrderController::class, 'show']);
 });
 
@@ -66,7 +66,9 @@ Route::get('/buses', [BusController::class, "index"]);
 Route::get('/bases', [BaseController::class, "index"]);
 
 Route::get('/routes', [RouteController::class, "index"]);
+Route::get('/routes/{_id}', [RouteController::class, "show"]);
 
+Route::post('/orders', [OrderController::class, 'store']);
 // Đăng ký
 Route::post('/users', [UserController::class, 'store']);
 // //API route để đăng nhập

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 use App\Models\Route;
-use App\Models\User;
+use App\Models\Users;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,13 +18,13 @@ class OrderResource extends JsonResource
     public function toArray($request)
     {
         $routeId = Route::find($this->routeId);
-        $userId = User::find($this->userId);
+        $userId = Users::find($this->userId);
   
     return [
         'id' => $this->id,
         'userId' => $userId,
         'routeId' => $routeId,
-        'seatsId' => $this->seatsId,
+        'seatId' => $this->seatId,
         'status' => $this->status,
         'paymentInfo' => $this->paymentInfo,
         'promoteId' => $this->promoteId

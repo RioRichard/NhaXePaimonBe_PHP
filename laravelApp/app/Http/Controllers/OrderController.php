@@ -30,7 +30,7 @@ class OrderController extends Controller
         $order = Order::create($input);
         $arr = [
             'status' => true,
-            'message' => "Tai khoan đã lưu thành công",
+            'message' => "Đơn hàng đã lưu thành công",
             'data' => new OrderResource($order)
         ];
         return response()->json($arr, 201);
@@ -65,22 +65,7 @@ class OrderController extends Controller
             return response()->json($error);
         }
         $input = $request->all();
-        $validator = Validator::make($input, [
-            'userId' => 'required',
-            'routeId' => 'required',
-            // 'seatsId' =>'required',
-            'status' => 'required',
-            'paymentInfo' => 'required',
-            'promoteId' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $arr = [
-                'success' => false,
-                'message' => 'Lỗi kiểm tra dữ liệu',
-                'data' => $validator->errors()
-            ];
-            return response()->json($arr, 200);
-        }
+       
 
         $order->userId = $input['userId'];
         $order->routeId = $input['routeId'];
