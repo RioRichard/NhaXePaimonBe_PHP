@@ -29,8 +29,8 @@ Route::middleware(['auth:manager'])->group(function () {
     Route::get('/managers', [ManagerController::class, "index"]);
     Route::post('/managers', [ManagerController::class, "store"]);
 
-    Route::get('/order', [OrderController::class, 'index']);
-    Route::put('/order/{order}', [OrderController::class, 'update']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::put('/orders/{order}', [OrderController::class, 'update']);
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
@@ -57,10 +57,9 @@ Route::middleware(['auth:user'])->group(function () {
 });
 
 Route::middleware(['auth:user', 'auth:manager'])->group(function () {
-
-    Route::get('/order/{id}', [OrderController::class, 'show']);
+   
 });
-
+Route::get('/orders/{id}', [OrderController::class, 'show']);
 Route::get('/buses', [BusController::class, "index"]);
 
 Route::get('/bases', [BaseController::class, "index"]);

@@ -15,8 +15,8 @@ class BaseController extends Controller
     public function index()
     {
         $base = Base::all();
-        $data=[
-            'bases'=>BaseResource::collection($base)
+        $data = [
+            'bases' => BaseResource::collection($base)
         ];
         $arr = [
             'status' => true,
@@ -37,19 +37,6 @@ class BaseController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        // $validator = Validator::make($input, [
-        //     'id' => 'required',
-        //     'name' => 'required',
-        //     'address' => 'required',
-        // ]);
-        // if ($validator->fails()) {
-        //     $arr = [
-        //         'success' => false,
-        //         'message' => 'Lỗi kiểm tra dữ liệu',
-        //         'data' => $validator->errors()
-        //     ];
-        //     return response()->json($arr, 200);
-        // }
         $base = Base::create($input);
         $arr = [
             'status' => true,
@@ -74,8 +61,8 @@ class BaseController extends Controller
             return response()->json($arr, 200);
         }
         $data = [
-            'bases' =>new BaseResource($base)
-          ];
+            'bases' => new BaseResource($base)
+        ];
         $arr = [
             'status' => true,
             'message' => "Chi tiết cơ sở ",
@@ -133,5 +120,6 @@ class BaseController extends Controller
             $error = ['message' => 'Không tìm thấy id cần xóa'];
             return response()->json($error);
         }
+
     }
 }

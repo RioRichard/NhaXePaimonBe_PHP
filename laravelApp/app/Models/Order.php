@@ -12,6 +12,6 @@ class Order extends Model
 {
     use HasFactory;
     protected $table = "order";
-    protected $fillable = ['id', 'userId', 'routeId', 'seatsId', 'status', 'paymentInfo','promoteId'];
+    protected $fillable = ['id', 'userId', 'routeId', 'seatId', 'status', 'paymentInfo','promoteId'];
     public $timestamps = false;  
 }

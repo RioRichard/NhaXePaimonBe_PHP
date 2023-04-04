@@ -27,6 +27,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+
         $order = Order::create($input);
         $arr = [
             'status' => true,
@@ -61,18 +62,12 @@ class OrderController extends Controller
     {
         $order = Order::find($_id);
         if (!$order) {
-            $error = ['message' => 'Không tìm thấy id cần xóa'];
+            $error = ['message' => 'Không tìm thấy id cần sửa'];
             return response()->json($error);
         }
         $input = $request->all();
-       
-
-        $order->userId = $input['userId'];
-        $order->routeId = $input['routeId'];
-        $order->seatsId = $input['seatsId'];
         $order->status = $input['status'];
         $order->paymentInfo = $input['paymentInfo'];
-        $order->promoteId = $input['promoteId'];
         $order->save();
         $arr = [
             'status' => true,
