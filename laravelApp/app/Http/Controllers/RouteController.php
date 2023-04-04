@@ -101,37 +101,16 @@ class RouteController extends Controller
     {
         $route = Route::find($_id);
         if (!$route) {
-            $error = ['message' => 'Không tìm thấy id cần xóa'];
+            $error = ['message' => 'Không tìm thấy id cần sửa'];
             return response()->json($error);
         }
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'fromId' => 'required',
-            'toId' => 'required',
-            'departure' => 'required',
-            'arrival' => 'required',
-            'bus' => 'required',
-            // 'driver' => 'required',
-            // 'extraStaff' => 'required',
-            'price' => 'required',
-            'status' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $arr = [
-                'success' => false,
-                'message' => 'Lỗi kiểm tra dữ liệu',
-                'data' => $validator->errors()
-            ];
-            return response()->json($arr, 200);
-        }
-
+        $input = $request->all();       
         $route->fromId = $input['fromId'];
         $route->toId = $input['toId'];
         $route->departure = $input['departure'];
         $route->arrival = $input['arrival'];
         $route->bus = $input['bus'];
         $route->price = $input['price'];
-        $route->status = $input['status'];
         $route->save();
         $arr = [
             'status' => true,

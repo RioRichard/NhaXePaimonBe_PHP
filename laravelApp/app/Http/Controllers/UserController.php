@@ -26,8 +26,7 @@ class UserController extends Controller
   {
     $input = $request->all();
     $validator = Validator::make($input, [
-      'userName' => 'required',
-
+      'username' => 'required',
       'password' => 'required',
 
 

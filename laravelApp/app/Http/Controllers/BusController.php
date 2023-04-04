@@ -38,19 +38,14 @@ class BusController extends Controller
   public function store(Request $request)
   {
     $input = $request->all();
-    echo $input['bus_number'];
     $bus = Bus::create($input);
-    $numberSeats = $input['numberOfSeat'];
-    // $busId = $bus->id;
-    // $name = "name";
-    // $param = array($busId,$name);
+    $numberSeats = $input['numberSeat'];
     for ($i = 0; $i < $numberSeats; $i++) {
       $seat = new Seat;
       $seat->busId = $bus->id;
-      $seat->name = "Ghế ".$i+1;
+      $seat->name = "Ghế " . $i + 1;
       $seat->save();
     }
-    echo $numberSeats;
     $arr = [
       'status' => true,
       'message' => "Xe đã lưu thành công",
@@ -107,7 +102,7 @@ class BusController extends Controller
     $bus->bus_number = $input['bus_number'];
     $bus->type = $input['type'];
     $bus->save();
-    $arr = [  
+    $arr = [
       'status' => true,
       'message' => 'cập nhật thành công',
       'data' => new BusResource($bus)
@@ -128,7 +123,8 @@ class BusController extends Controller
         'data' => [],
       ];
       return response()->json($arr, 200);
-    } else {
+    } 
+    else {
       $error = ['message' => 'Không tìm thấy id cần xóa'];
       return response()->json($error);
     }

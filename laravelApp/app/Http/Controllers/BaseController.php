@@ -56,7 +56,7 @@ class BaseController extends Controller
             $arr = [
                 'success' => false,
                 'message' => 'Không có cơ sở này',
-                'dara' => []
+                'data' => []
             ];
             return response()->json($arr, 200);
         }
